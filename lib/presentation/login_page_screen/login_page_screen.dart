@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:supercart_new/core/app_export.dart';
 import 'package:supercart_new/widgets/custom_elevated_button.dart';
-import 'package:supercart_new/widgets/custom_text_form_field.dart';
 
 class LoginPageScreen extends GetWidget<LoginPageController> {
   const LoginPageScreen({Key? key}) : super(key: key);

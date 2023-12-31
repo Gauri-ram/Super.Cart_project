@@ -7,7 +7,7 @@ class ThemeHelper {
   // The current app theme
   var _appTheme = PrefUtils().getThemeData();
 
-// A map of custom color themes supported by the app
+// A map of custom color themes supported by the  app
   Map<String, PrimaryColors> _supportedCustomColor = {
     'primary': PrimaryColors()
   };
@@ -126,6 +126,7 @@ class ColorSchemes {
 
 /// Class containing custom colors for a primary theme.
 class PrimaryColors {
+  Color get black900 => Color(0XFF000000);
   // BlueGray
   Color get blueGray100 => Color(0XFFD9D9D9);
 

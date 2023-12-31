@@ -44,6 +44,11 @@ class AppNavigationScreen extends GetWidget<AppNavigationController> {
                           onTapScreenTitle: () =>
                               onTapScreenTitle(AppRoutes.loginPageScreen),
                         ),
+                        _buildScreenTitle(
+                          screenTitle: "main page".tr,
+                          onTapScreenTitle: () =>
+                              onTapScreenTitle(AppRoutes.mainPageonePage),
+                        ),
                       ],
                     ),
                   ),

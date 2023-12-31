@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       locale: Get.deviceLocale, //for setting localization strings
       fallbackLocale: Locale('en', 'US'),
       title: 'supercart_new',
-      initialBinding: InitialBindings(),
+      // initialBinding: InitialBindings(),
       initialRoute: AppRoutes.initialRoute,
       getPages: AppRoutes.pages,
     );

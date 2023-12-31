@@ -79,7 +79,7 @@ class OtpPageScreen extends GetWidget<OtpPageController> {
           bottom: screenHeight * 0.02),
       buttonStyle: CustomButtonStyles.outlinePrimaryTL11,
       buttonTextStyle: CustomTextStyles.labelLargeGray200,
-      // onPressed: onTapBtnConfirm,
+      onPressed: onTapBtnConfirm,
     );
   }
 
@@ -121,7 +121,7 @@ class OtpPageScreen extends GetWidget<OtpPageController> {
     Get.toNamed(AppRoutes.loginPageScreen);
   }
 
-  // onTapBtnConfirm() {
-  //   Get.toNamed(AppRoutes.mainPageContainerScreen);
-  // }
+  onTapBtnConfirm() {
+    Get.toNamed(AppRoutes.mainPageonePage);
+  }
 }

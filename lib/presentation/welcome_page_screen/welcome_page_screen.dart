@@ -103,10 +103,10 @@ class WelcomePageScreen extends GetWidget<WelcomePageController> {
                                 CustomElevatedButton(
                                     text: "lbl_get_started".tr,
                                     margin: EdgeInsets.only(
-                                      left: screenWidth * 0.005,
-                                      right: screenWidth * 0.005,
-                                      top: screenHeight * 0.005,
-                                    ),
+                                        // left: screenWidth * 0.005,
+                                        // right: screenWidth * 0.005,
+                                        // top: screenHeight * 0.005,
+                                        ),
                                     onPressed: () {
                                       navigateToLogin();
                                     },

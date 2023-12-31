@@ -12,6 +12,9 @@ class ImageConstant {
   // login page images
   static String imgLogin = '$imagePath/img_login.png';
 
+  //profile image
+  static String imgProfile = '$imagePath/img_profile.png';
+
   // Common images
   static String imgImage1 = '$imagePath/img_image_1.png';
 
@@ -25,7 +28,9 @@ class ImageConstant {
 
   static String imgLock = '$imagePath/img_lock.svg';
 
-  static String imgCart = '$imagePath/img_cart.svg';
+  // static String imgCart = '$imagePath/img_cart.svg';
 
   static String imageNotFound = 'assets/images/image_not_found.png';
+
+  static String imgCart = 'assets/images/img_cart.png';
 }

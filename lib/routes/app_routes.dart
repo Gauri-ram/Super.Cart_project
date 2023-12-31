@@ -7,6 +7,7 @@ import 'package:supercart_new/presentation/login_page_screen/binding/login_page_
 import 'package:supercart_new/presentation/app_navigation_screen/app_navigation_screen.dart';
 import 'package:supercart_new/presentation/app_navigation_screen/binding/app_navigation_binding.dart';
 import 'package:supercart_new/presentation/main_pageone_page/main_pageone_page.dart';
+import 'package:supercart_new/presentation/checkout_screen/checkout_screen.dart';
 import 'package:get/get.dart';
 
 class AppRoutes {
@@ -21,6 +22,8 @@ class AppRoutes {
   static const String mainPageonePage = '/main_pageone_page';
 
   static const String initialRoute = '/initialRoute';
+
+  static const String checkoutRoute = '/checkout_screen';
 
   static List<GetPage> pages = [
     GetPage(
@@ -54,6 +57,10 @@ class AppRoutes {
     GetPage(
       name: mainPageonePage,
       page: () => MainPageonePage(),
+    ),
+    GetPage(
+      name: checkoutRoute,
+      page: () => CheckoutPageoneScreen(),
     ),
     GetPage(
       name: initialRoute,

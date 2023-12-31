@@ -150,7 +150,7 @@ class _MainPageonePageState extends State<MainPageonePage> {
           ),
           GestureDetector(
             onTap: () {
-              Get.toNamed(AppRoutes.otpPageScreen);
+              Get.toNamed(AppRoutes.checkoutRoute);
             },
             child: CustomImageView(
               imagePath: ImageConstant.imgCart,

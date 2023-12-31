@@ -21,6 +21,13 @@ class CustomButtonStyles {
         shadowColor: theme.colorScheme.primary,
         elevation: 4,
       );
+  // Filled button style
+  static ButtonStyle get fillPrimary => ElevatedButton.styleFrom(
+        backgroundColor: theme.colorScheme.primary,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.h),
+        ),
+      );
   // text button style
   static ButtonStyle get none => ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),

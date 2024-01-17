@@ -7,6 +7,11 @@ import '../core/app_export.dart';
 
 class CustomTextStyles {
   // Label text style
+
+  static get bodyMediumLight => theme.textTheme.bodyMedium!.copyWith(
+        fontWeight: FontWeight.w300,
+      );
+
   static get labelLargeGray200 => theme.textTheme.labelLarge!.copyWith(
         color: appTheme.gray200,
         fontSize: 13.fSize,
@@ -30,6 +35,17 @@ class CustomTextStyles {
         color: appTheme.whiteA700,
         fontSize: 22.fSize,
         fontWeight: FontWeight.w600,
+      );
+  static get titleLargeGray20022 => theme.textTheme.titleLarge!.copyWith(
+        color: appTheme.gray200,
+        fontSize: 22.fSize,
+      );
+
+  static get displaySmallPoppinsOnPrimary =>
+      theme.textTheme.displaySmall!.poppins.copyWith(
+        color: theme.colorScheme.onPrimary,
+        fontSize: 35.fSize,
+        fontWeight: FontWeight.w700,
       );
 }
 

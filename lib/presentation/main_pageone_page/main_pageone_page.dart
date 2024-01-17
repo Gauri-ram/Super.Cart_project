@@ -125,7 +125,7 @@ class _MainPageonePageState extends State<MainPageonePage> {
         children: [
           GestureDetector(
             onTap: () {
-              Get.toNamed(AppRoutes.otpPageScreen);
+              Get.toNamed(AppRoutes.profilePageScreen);
             },
             child: CustomImageView(
               imagePath: ImageConstant.imgProfile,

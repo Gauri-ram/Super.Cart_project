@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import 'package:supercart_new/presentation/otp_page_screen/controller/otp_page_controller.dart';
+=======
+import 'package:supercart_new/presentation/info_contact_us_screen/info_contact_us_screen.dart';
+>>>>>>> d2c604123eff3045e9c3632fa004feb9cc4df1f0
 import 'package:supercart_new/presentation/welcome_page_screen/welcome_page_screen.dart';
 import 'package:supercart_new/presentation/welcome_page_screen/binding/welcome_page_binding.dart';
 import 'package:supercart_new/presentation/otp_page_screen/otp_page_screen.dart';
@@ -9,6 +13,9 @@ import 'package:supercart_new/presentation/app_navigation_screen/app_navigation_
 import 'package:supercart_new/presentation/app_navigation_screen/binding/app_navigation_binding.dart';
 import 'package:supercart_new/presentation/main_pageone_page/main_pageone_page.dart';
 import 'package:supercart_new/presentation/checkout_screen/checkout_screen.dart';
+import 'package:supercart_new/presentation/profile_page_screen/profile_page_screen.dart';
+import 'package:supercart_new/presentation/info_contact_us_screen/info_contact_us_screen.dart';
+import 'package:supercart_new/presentation/edit_profile_screen/edit_profile_screen.dart';
 import 'package:get/get.dart';
 
 // class OtpPageBinding extends Bindings {
@@ -32,6 +39,12 @@ class AppRoutes {
   static const String initialRoute = '/initialRoute';
 
   static const String checkoutRoute = '/checkout_screen';
+
+  static const String profilePageScreen = '/profile_page_screen';
+
+  static const String infoContactUsPageScreen = '/info_contact_us_screen';
+
+  static const String editProfileScreen = '/edit_profile_screen';
 
   static List<GetPage> pages = [
     GetPage(
@@ -72,6 +85,18 @@ class AppRoutes {
     GetPage(
       name: checkoutRoute,
       page: () => CheckoutPageoneScreen(),
+    ),
+    GetPage(
+      name: profilePageScreen,
+      page: () => ProfilePageScreen(),
+    ),
+    GetPage(
+      name: infoContactUsPageScreen,
+      page: () => InfoContactUsScreen(),
+    ),
+    GetPage(
+      name: editProfileScreen,
+      page: () => EditProfileScreen(),
     ),
     GetPage(
       name: initialRoute,

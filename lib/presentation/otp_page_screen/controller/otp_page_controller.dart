@@ -22,4 +22,11 @@ class OtpPageController extends GetxController with CodeAutoFill {
     super.onInit();
     listenForCode();
   }
+
+  @override
+  void dispose() {
+    // Dispose of the TextEditingController when the controller is disposed
+    otpController.value.dispose();
+    super.dispose();
+  }
 }

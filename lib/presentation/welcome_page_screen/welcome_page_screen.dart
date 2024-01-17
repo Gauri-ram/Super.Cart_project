@@ -1,3 +1,6 @@
+import 'package:provider/provider.dart';
+import 'package:supercart_new/provider/auth_provider.dart';
+
 import 'controller/welcome_page_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:supercart_new/core/app_export.dart';
@@ -8,6 +11,7 @@ class WelcomePageScreen extends GetWidget<WelcomePageController> {
 
   @override
   Widget build(BuildContext context) {
+    final ap = Provider.of<AuthProvider>(context, listen: false);
     mediaQueryData = MediaQuery.of(context);
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
@@ -108,7 +112,10 @@ class WelcomePageScreen extends GetWidget<WelcomePageController> {
                                         // top: screenHeight * 0.005,
                                         ),
                                     onPressed: () {
-                                      navigateToLogin();
+                                      ap.isSignedIn ==
+                                              true //when true fetch shared preferences data
+                                          ? navigateToMain()
+                                          : navigateToLogin();
                                     },
                                     height: screenHeight * 0.12),
                                 SizedBox(height: screenHeight * 0.025),
@@ -132,6 +139,13 @@ class WelcomePageScreen extends GetWidget<WelcomePageController> {
   navigateToLogin() {
     Get.toNamed(
       AppRoutes.loginPageScreen,
+    );
+  }
+
+  /// Navigates to the mainPageScreen when the user already signed in
+  navigateToMain() {
+    Get.toNamed(
+      AppRoutes.mainPageonePage,
     );
   }
 }

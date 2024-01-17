@@ -1,3 +1,4 @@
+import 'package:supercart_new/presentation/otp_page_screen/controller/otp_page_controller.dart';
 import 'package:supercart_new/presentation/welcome_page_screen/welcome_page_screen.dart';
 import 'package:supercart_new/presentation/welcome_page_screen/binding/welcome_page_binding.dart';
 import 'package:supercart_new/presentation/otp_page_screen/otp_page_screen.dart';
@@ -9,6 +10,13 @@ import 'package:supercart_new/presentation/app_navigation_screen/binding/app_nav
 import 'package:supercart_new/presentation/main_pageone_page/main_pageone_page.dart';
 import 'package:supercart_new/presentation/checkout_screen/checkout_screen.dart';
 import 'package:get/get.dart';
+
+// class OtpPageBinding extends Bindings {
+//   @override
+//   void dependencies() {
+//     Get.lazyPut<OtpPageController>(() => OtpPageController());
+//   }
+// }
 
 class AppRoutes {
   static const String welcomePageScreen = '/welcome_page_screen';
@@ -35,7 +43,10 @@ class AppRoutes {
     ),
     GetPage(
       name: otpPageScreen,
-      page: () => OtpPageScreen(),
+      page: () => OtpPageScreen(
+        verificationId: otpPageScreen,
+        controller: OtpPageController(),
+      ),
       bindings: [
         OtpPageBinding(),
       ],

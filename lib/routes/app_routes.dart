@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 import 'package:supercart_new/presentation/otp_page_screen/controller/otp_page_controller.dart';
-=======
 import 'package:supercart_new/presentation/info_contact_us_screen/info_contact_us_screen.dart';
->>>>>>> d2c604123eff3045e9c3632fa004feb9cc4df1f0
 import 'package:supercart_new/presentation/welcome_page_screen/welcome_page_screen.dart';
 import 'package:supercart_new/presentation/welcome_page_screen/binding/welcome_page_binding.dart';
 import 'package:supercart_new/presentation/otp_page_screen/otp_page_screen.dart';

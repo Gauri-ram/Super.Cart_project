@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:supercart_new/core/app_export.dart';
 import 'package:supercart_new/presentation/otp_page_screen/controller/otp_page_controller.dart';
+import 'package:supercart_new/presentation/profile_page_screen/profile_page_screen.dart';
 import 'package:supercart_new/provider/auth_provider.dart';
 import 'package:supercart_new/widgets/custom_elevated_button.dart';
 import 'package:supercart_new/widgets/custom_icon_button.dart';
@@ -193,7 +194,13 @@ class _OtpPageScreenState extends State<OtpPageScreen> {
         onSuccess: () {
           ap.checkExistingUser().then((value) async {
             if (value == true) {
-            } else {}
+            } else {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ProfilePageScreen()),
+                  (route) => false);
+            }
           });
         });
   }

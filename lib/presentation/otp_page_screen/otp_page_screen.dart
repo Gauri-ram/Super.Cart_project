@@ -47,7 +47,7 @@ class OtpPageScreen extends GetWidget<OtpPageController> {
                         shape: PinCodeFieldShape.box,
                         borderRadius: BorderRadius.circular(10.0),
                         fieldHeight: screenHeight * 0.075,
-                        fieldWidth: screenWidth * 0.12,
+                        fieldWidth: screenWidth * 0.09,
                         activeFillColor: Colors.white,
                       ),
                       keyboardType: TextInputType.number,

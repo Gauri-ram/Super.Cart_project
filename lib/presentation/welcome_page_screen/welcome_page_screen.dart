@@ -34,7 +34,7 @@ class WelcomePageScreen extends GetWidget<WelcomePageController> {
                         // Image of supercart
                         CustomImageView(
                           imagePath: ImageConstant.img202311101009290000,
-                          height: screenHeight * 0.75,
+                          height: screenHeight * 0.65,
                           width: screenWidth,
                           alignment: Alignment.topCenter,
                           margin: EdgeInsets.only(top: screenHeight * 0.001),
@@ -102,11 +102,7 @@ class WelcomePageScreen extends GetWidget<WelcomePageController> {
                                 SizedBox(height: screenHeight * 0.02),
                                 CustomElevatedButton(
                                     text: "lbl_get_started".tr,
-                                    margin: EdgeInsets.only(
-                                        // left: screenWidth * 0.005,
-                                        // right: screenWidth * 0.005,
-                                        // top: screenHeight * 0.005,
-                                        ),
+                                    margin: EdgeInsets.only(),
                                     onPressed: () {
                                       navigateToLogin();
                                     },

@@ -1,4 +1,5 @@
 import 'package:supercart_new/presentation/info_contact_us_screen/info_contact_us_screen.dart';
+import 'package:supercart_new/presentation/previous_order_screen/previous_order_screen.dart';
 import 'package:supercart_new/presentation/welcome_page_screen/welcome_page_screen.dart';
 import 'package:supercart_new/presentation/welcome_page_screen/binding/welcome_page_binding.dart';
 import 'package:supercart_new/presentation/otp_page_screen/otp_page_screen.dart';
@@ -12,6 +13,7 @@ import 'package:supercart_new/presentation/checkout_screen/checkout_screen.dart'
 import 'package:supercart_new/presentation/profile_page_screen/profile_page_screen.dart';
 import 'package:supercart_new/presentation/info_contact_us_screen/info_contact_us_screen.dart';
 import 'package:supercart_new/presentation/edit_profile_screen/edit_profile_screen.dart';
+import 'package:supercart_new/presentation/previous_order_screen/previous_order_screen.dart';
 import 'package:get/get.dart';
 
 class AppRoutes {
@@ -34,6 +36,8 @@ class AppRoutes {
   static const String infoContactUsPageScreen = '/info_contact_us_screen';
 
   static const String editProfileScreen = '/edit_profile_screen';
+
+  static const String previousOrderScreen = '/previous_order_screen';
 
   static List<GetPage> pages = [
     GetPage(
@@ -71,6 +75,10 @@ class AppRoutes {
     GetPage(
       name: checkoutRoute,
       page: () => CheckoutPageoneScreen(),
+    ),
+    GetPage(
+      name: previousOrderScreen,
+      page: () => PreviousOrderScreen(),
     ),
     GetPage(
       name: profilePageScreen,

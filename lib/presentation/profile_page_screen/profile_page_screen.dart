@@ -39,46 +39,51 @@ class ProfilePageScreen extends StatelessWidget {
                     ),
                     child: Column(
                       children: [
-                        GestureDetector(
-                          onTap: () {
-                            onTapTwo(context);
-                          },
-                          child: Container(
-                            margin: EdgeInsets.only(
-                                left: getResponsiveWidth(0.5),
-                                right: getResponsiveWidth(0.5)),
-                            padding: EdgeInsets.symmetric(
-                              horizontal: getResponsiveWidth(4),
-                              vertical: getResponsiveHeight(1.5),
-                            ),
-                            decoration: AppDecoration.outlineBlack.copyWith(
-                              borderRadius: BorderRadiusStyle.roundedBorder30,
-                              color: appTheme.lightGreen900,
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CustomImageView(
-                                  imagePath: ImageConstant.imgThumbsUp,
-                                  height: getResponsiveHeight(6),
-                                  width: getResponsiveWidth(7),
-                                  margin: EdgeInsets.only(
-                                      top: getResponsiveHeight(2),
-                                      bottom: getResponsiveHeight(0.5)),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: getResponsiveWidth(1),
-                                      top: getResponsiveHeight(1.5)),
-                                  child: Text(
-                                    "  My Orders",
-                                    style: theme.textTheme.titleLarge,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     onTapTwo(context);
+                        //   },
+                        //   child: Container(
+                        //     margin: EdgeInsets.only(
+                        //         left: getResponsiveWidth(0.5),
+                        //         right: getResponsiveWidth(0.5)),
+                        //     padding: EdgeInsets.symmetric(
+                        //       horizontal: getResponsiveWidth(4),
+                        //       vertical: getResponsiveHeight(1.5),
+                        //     ),
+                        //     decoration: AppDecoration.outlineBlack.copyWith(
+                        //       borderRadius: BorderRadiusStyle.roundedBorder30,
+                        //       color: appTheme.lightGreen900,
+                        //     ),
+                        //     child: Row(
+                        //       crossAxisAlignment: CrossAxisAlignment.center,
+                        //       children: [
+                        //         CustomImageView(
+                        //           imagePath: ImageConstant.imgThumbsUp,
+                        //           height: getResponsiveHeight(6),
+                        //           width: getResponsiveWidth(7),
+                        //           margin: EdgeInsets.only(
+                        //               top: getResponsiveHeight(2),
+                        //               bottom: getResponsiveHeight(0.5)),
+                        //         ),
+                        //         GestureDetector(
+                        //           onTap: () {
+                        //             onTapTxtPrevOrder(context);
+                        //           },
+                        //           child: Padding(
+                        //             padding: EdgeInsets.only(
+                        //                 left: getResponsiveWidth(1),
+                        //                 bottom: getResponsiveHeight(1.5)),
+                        //             child: Text(
+                        //               "  Orders",
+                        //               style: theme.textTheme.titleLarge,
+                        //             ),
+                        //           ),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
                         SizedBox(height: getResponsiveHeight(3)),
                         Container(
                           margin: EdgeInsets.only(
@@ -93,7 +98,7 @@ class ProfilePageScreen extends StatelessWidget {
                             color: appTheme.lightGreen900,
                           ),
                           child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               CustomImageView(
@@ -123,7 +128,7 @@ class ProfilePageScreen extends StatelessWidget {
                         ),
                         SizedBox(height: getResponsiveHeight(7.5)),
                         CustomElevatedButton(
-                          height: screenHeight * 0.12,
+                          height: screenHeight * 0.07,
                           width: screenWidth * 0.7,
                           text: "LOGOUT",
                           margin: EdgeInsets.only(
@@ -233,10 +238,14 @@ class ProfilePageScreen extends StatelessWidget {
   }
 
   onTapTwo(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.otpPageScreen);
+    Navigator.pushNamed(context, AppRoutes.previousOrderScreen);
   }
 
   onTapTxtCustomerCare(BuildContext context) {
     Navigator.pushNamed(context, AppRoutes.infoContactUsPageScreen);
+  }
+
+  onTapTxtPrevOrder(BuildContext context) {
+    Navigator.pushNamed(context, AppRoutes.previousOrderScreen);
   }
 }

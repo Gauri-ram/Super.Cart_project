@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:supercart_new/core/app_export.dart';
+import 'package:supercart_new/presentation/edit_profile_screen/edit_profile_screen.dart';
+import 'package:supercart_new/presentation/main_pageone_page/main_pageone_page.dart';
 import 'package:supercart_new/presentation/otp_page_screen/controller/otp_page_controller.dart';
 import 'package:supercart_new/presentation/profile_page_screen/profile_page_screen.dart';
 import 'package:supercart_new/provider/auth_provider.dart';
+import 'package:supercart_new/utils/utils.dart';
 import 'package:supercart_new/widgets/custom_elevated_button.dart';
 import 'package:supercart_new/widgets/custom_icon_button.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:pinput/pinput.dart';
 
 class OtpPageScreen extends StatefulWidget {
   final String verificationId;
@@ -30,8 +33,10 @@ class _OtpPageScreenState extends State<OtpPageScreen> {
     mediaQueryData = MediaQuery.of(context);
     screenWidth = mediaQueryData.size.width;
     screenHeight = mediaQueryData.size.height;
+
     final isLoading =
         Provider.of<AuthProvider>(context, listen: true).isLoading;
+
     return SafeArea(
       child: isLoading == true
           ? const Center(
@@ -68,28 +73,29 @@ class _OtpPageScreenState extends State<OtpPageScreen> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: screenWidth * 0.10),
-                      child: Obx(() => PinCodeTextField(
-                            appContext: Get.context!,
-                            length: 4,
-                            controller: widget.controller.otpController.value,
-                            pinTheme: PinTheme(
-                              shape: PinCodeFieldShape.box,
-                              borderRadius: BorderRadius.circular(10.0),
-                              fieldHeight: screenHeight * 0.075,
-                              fieldWidth: screenWidth * 0.12,
-                              activeFillColor: Colors.lightGreen[200],
-                            ),
-                            onChanged: (value) {
-                              print(value);
-                              setState(() {
-                                otpcode = value;
-                              });
-                            },
-                            keyboardType: TextInputType.number,
-                          )),
-                    ),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.10),
+                        child: Pinput(
+                          length: 6,
+                          showCursor: true,
+                          defaultPinTheme: PinTheme(
+                              width: 60,
+                              height: 60,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color: Colors.green.shade300,
+                                  )),
+                              textStyle: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                              )),
+                          onCompleted: (value) {
+                            setState(() {
+                              otpcode = value;
+                            });
+                          },
+                        )),
                     Expanded(
                       child: Align(
                         alignment: Alignment.center,
@@ -136,7 +142,7 @@ class _OtpPageScreenState extends State<OtpPageScreen> {
         if (otpcode != null) {
           verifyOtp(context, otpcode!);
         } else {
-          print("Enter 4 digit code");
+          showSnackBar(context, "Enter 6-Digit code");
         }
       },
     );
@@ -194,11 +200,22 @@ class _OtpPageScreenState extends State<OtpPageScreen> {
         onSuccess: () {
           ap.checkExistingUser().then((value) async {
             if (value == true) {
+              // user exists
+              ap.getDataFromFirestore().then(
+                    (value) => ap.saveUserDataToSP().then(
+                          (value) => ap.setSignIn().then((value) =>
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const MainPageonePage()))),
+                        ),
+                  );
             } else {
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const ProfilePageScreen()),
+                      builder: (context) => const EditProfileScreen()),
                   (route) => false);
             }
           });

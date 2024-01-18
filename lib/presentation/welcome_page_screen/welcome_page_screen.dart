@@ -111,11 +111,14 @@ class WelcomePageScreen extends GetWidget<WelcomePageController> {
                                         // right: screenWidth * 0.005,
                                         // top: screenHeight * 0.005,
                                         ),
-                                    onPressed: () {
-                                      ap.isSignedIn ==
-                                              true //when true fetch shared preferences data
-                                          ? navigateToMain()
-                                          : navigateToLogin();
+                                    onPressed: () async {
+                                      if (ap.isSignedIn == true) {
+                                        await ap.getDataFromSP().whenComplete(
+                                              () => navigateToMain(),
+                                            );
+                                      } else {
+                                        navigateToLogin();
+                                      }
                                     },
                                     height: screenHeight * 0.12),
                                 SizedBox(height: screenHeight * 0.025),

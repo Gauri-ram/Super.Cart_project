@@ -52,4 +52,8 @@ class ImageConstant {
   static String imgGrid = '$imagePath/img_grid.svg';
 
   static String imgClock = '$imagePath/img_clock.svg';
+
+  static String imgShoppingCart = '$imagePath/img_shopping_cart.png';
+
+  static String imgHome = '$imagePath/img_home.png';
 }

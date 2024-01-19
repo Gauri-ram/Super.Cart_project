@@ -4,9 +4,68 @@ import 'package:supercart_new/widgets/app_bar/appbar_leading_iconbutton.dart';
 import 'package:supercart_new/widgets/app_bar/appbar_title.dart';
 import 'package:supercart_new/widgets/app_bar/custom_app_bar.dart';
 import 'package:supercart_new/widgets/custom_elevated_button.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:supercart_new/provider/auth_provider.dart';
+import 'package:provider/provider.dart';
 
-class CheckoutPageoneScreen extends StatelessWidget {
+class CheckoutPageoneScreen extends StatefulWidget {
   const CheckoutPageoneScreen({Key? key}) : super(key: key);
+
+  @override
+  _CheckoutPageoneScreenState createState() => _CheckoutPageoneScreenState();
+}
+
+class _CheckoutPageoneScreenState extends State<CheckoutPageoneScreen> {
+  Razorpay? _razorpay;
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    Fluttertoast.showToast(
+        msg: "SUCCESS PAYMENT: ${response.paymentId}", timeInSecForIosWeb: 4);
+
+    Navigator.pushNamed(context, AppRoutes.thankyouPageScreen);
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    Fluttertoast.showToast(
+        msg: "ERROR PAYMENT: ${response.code} - ${response.message}",
+        timeInSecForIosWeb: 4);
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    Fluttertoast.showToast(
+        msg: "EXTERNAL_WALLET IS: ${response.walletName}",
+        timeInSecForIosWeb: 4);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _razorpay = Razorpay();
+    _razorpay?.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay?.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay?.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+  }
+
+  void makePayment() async {
+    final ap = Provider.of<AuthProvider>(context, listen: false);
+    var options = {
+      'key': 'rzp_test_TdOGT5BsbxJDrE', //test mode
+      // 'key': 'rzp_live_FLTPo2ImHpzU0H', //live mode
+      'amount': 1000, //paisa
+      'name': "SuperCart",
+      'description': 'item',
+      'prefill': {
+        'contact': ap.userModel.phoneNumber,
+        'email': ap.userModel.email
+      }
+    };
+
+    try {
+      _razorpay?.open(options);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +204,7 @@ class CheckoutPageoneScreen extends StatelessWidget {
       buttonStyle: CustomButtonStyles.outlinePrimaryTL16,
       buttonTextStyle: theme.textTheme.titleLarge!,
       onPressed: () {
-        Get.toNamed(AppRoutes.mainPageonePage);
+        makePayment();
       },
     );
   }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1027393848593",
+    "project_id": "supercart-2120d",
+    "storage_bucket": "supercart-2120d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1027393848593:android:a945cb966b23653013f8b0",
+        "android_client_info": {
+          "package_name": "com.supercartnew.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkWLwGGziSgjYVbZCtyYniICZVblhBmKc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

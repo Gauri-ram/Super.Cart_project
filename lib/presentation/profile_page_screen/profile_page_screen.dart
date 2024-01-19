@@ -1,26 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:supercart_new/core/app_export.dart';
+import 'package:supercart_new/provider/auth_provider.dart';
 import 'package:supercart_new/widgets/app_bar/appbar_leading_iconbutton.dart';
 import 'package:supercart_new/widgets/app_bar/appbar_subtitle_one.dart';
 import 'package:supercart_new/widgets/app_bar/custom_app_bar.dart';
 import 'package:supercart_new/widgets/custom_bottom_app_bar.dart';
 import 'package:supercart_new/widgets/custom_elevated_button.dart';
 
-class ProfilePageScreen extends StatelessWidget {
+class ProfilePageScreen extends StatefulWidget {
   const ProfilePageScreen({Key? key}) : super(key: key);
 
   @override
+  _ProfilePageScreenState createState() => _ProfilePageScreenState();
+}
+
+class _ProfilePageScreenState extends State<ProfilePageScreen> {
+  double screenWidth = mediaQueryData.size.width;
+  double screenHeight = mediaQueryData.size.height;
+
+  double getResponsiveWidth(double percentage) {
+    return screenWidth * percentage / 100;
+  }
+
+  double getResponsiveHeight(double percentage) {
+    return screenHeight * percentage / 100;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    double screenWidth = mediaQueryData.size.width;
-    double screenHeight = mediaQueryData.size.height;
-
-    double getResponsiveWidth(double percentage) {
-      return screenWidth * percentage / 100;
-    }
-
-    double getResponsiveHeight(double percentage) {
-      return screenHeight * percentage / 100;
-    }
+    final ap = Provider.of<AuthProvider>(context, listen: false);
 
     return SafeArea(
       child: Scaffold(
@@ -28,7 +37,7 @@ class ProfilePageScreen extends StatelessWidget {
           width: double.maxFinite,
           child: Column(
             children: [
-              _buildFive(context, screenWidth, screenHeight),
+              _buildFive(context),
               SizedBox(height: getResponsiveHeight(5)),
               Expanded(
                 child: SingleChildScrollView(
@@ -126,7 +135,7 @@ class ProfilePageScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                        SizedBox(height: getResponsiveHeight(7.5)),
+                        SizedBox(height: getResponsiveHeight(5)),
                         CustomElevatedButton(
                           height: screenHeight * 0.07,
                           width: screenWidth * 0.7,
@@ -139,7 +148,9 @@ class ProfilePageScreen extends StatelessWidget {
                           buttonStyle: CustomButtonStyles.outlinePrimaryTL16,
                           buttonTextStyle: theme.textTheme.titleLarge!,
                           onPressed: () {
-                            Get.toNamed(AppRoutes.mainPageonePage);
+                            // Get.toNamed(AppRoutes.mainPageonePage);
+                            ap.userSignOut().then((value) =>
+                                Get.toNamed(AppRoutes.welcomePageScreen));
                           },
                         ),
                       ],
@@ -154,18 +165,8 @@ class ProfilePageScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildFive(
-      BuildContext context, double screenWidth, double screenHeight) {
-    double screenWidth = mediaQueryData.size.width;
-    double screenHeight = mediaQueryData.size.height;
-
-    double getResponsiveWidth(double percentage) {
-      return screenWidth * percentage / 100;
-    }
-
-    double getResponsiveHeight(double percentage) {
-      return screenHeight * percentage / 100;
-    }
+  Widget _buildFive(BuildContext context) {
+    final ap = Provider.of<AuthProvider>(context, listen: false);
 
     return Container(
       alignment: Alignment.center,
@@ -181,37 +182,65 @@ class ProfilePageScreen extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: getResponsiveHeight(1.5)),
+          SizedBox(height: getResponsiveHeight(1)),
           CustomAppBar(
             leading: AppbarLeadingIconbutton(
               margin: EdgeInsets.only(
                   left: getResponsiveWidth(1),
                   top: getResponsiveHeight(0.7),
                   bottom: getResponsiveHeight(1.2)),
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.mainPageonePage);
+              },
             ),
             centerTitle: true,
             title: AppbarSubtitleOne(text: "Profile"),
           ),
-          SizedBox(height: getResponsiveHeight(3)),
+          SizedBox(height: getResponsiveHeight(1)),
           Container(
             padding: EdgeInsets.symmetric(horizontal: getResponsiveWidth(10)),
             alignment: Alignment.center,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                CustomImageView(
-                  imagePath: ImageConstant.imgEllipse6,
-                  height: getResponsiveHeight(17),
-                  radius: BorderRadius.circular(getResponsiveWidth(9)),
-                  margin: EdgeInsets.only(left: getResponsiveWidth(2)),
+                CircleAvatar(
+                  backgroundColor: Colors.green.shade900,
+                  backgroundImage: NetworkImage(ap.userModel.profilePic),
+                  radius: 50,
                 ),
-                SizedBox(height: getResponsiveHeight(1.7)),
-                // Updated text alignment
+                SizedBox(
+                  height: getResponsiveHeight(1),
+                ),
+                Text(
+                  ap.userModel.name,
+                  style: TextStyle(
+                    color: Colors.white, // Set the text color
+                    fontSize: 14, // Set the font size
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  ap.userModel.email,
+                  style: TextStyle(
+                    color: Colors.white, // Set the text color
+                    fontSize: 14, // Set the font size
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  ap.userModel.phoneNumber,
+                  style: TextStyle(
+                    color: Colors.white, // Set the text color
+                    fontSize: 14, // Set the font size
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: getResponsiveHeight(4)),
                 Container(
                   width: double.infinity,
                   alignment: Alignment.center,
                   child: Padding(
-                    padding: EdgeInsets.only(right: getResponsiveWidth(3)),
+                    padding: EdgeInsets.only(right: getResponsiveWidth(1)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

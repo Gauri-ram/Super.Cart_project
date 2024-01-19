@@ -1,3 +1,6 @@
+import 'package:provider/provider.dart';
+import 'package:supercart_new/provider/auth_provider.dart';
+
 import 'controller/login_page_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +12,13 @@ class LoginPageScreen extends GetWidget<LoginPageController> {
 
   @override
   Widget build(BuildContext context) {
+    void sendPhoneNumber() {
+      final ap = Provider.of<AuthProvider>(context, listen: false);
+      String phoneNumber =
+          controller.enterMobileNumbervalueController.text.trim();
+      ap.signInWithPhone(context, "+91$phoneNumber");
+    }
+
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
@@ -57,7 +67,7 @@ class LoginPageScreen extends GetWidget<LoginPageController> {
                       left: screenWidth * 0.11, right: screenWidth * 0.11),
                   buttonStyle: CustomButtonStyles.outlinePrimaryTL16,
                   buttonTextStyle: theme.textTheme.titleLarge!,
-                  onPressed: onTapLOGIN,
+                  onPressed: () => sendPhoneNumber(),
                 ),
                 SizedBox(height: screenHeight * 0.09),
               ],

@@ -1,6 +1,9 @@
+import 'package:flutter/services.dart';
+
 import '../main_pageone_page/widgets/productlist_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:supercart_new/core/app_export.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class MainPageonePage extends StatefulWidget {
   const MainPageonePage({Key? key}) : super(key: key);
@@ -12,6 +15,22 @@ class MainPageonePage extends StatefulWidget {
 class _MainPageonePageState extends State<MainPageonePage> {
   late double screenWidth;
   late double screenHeight;
+
+  Future<void> scanBarcode() async {
+    String barcodeScanRes;
+    try {
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6666', 'Cancel', true, ScanMode.BARCODE);
+      debugPrint(barcodeScanRes);
+    } on PlatformException {
+      barcodeScanRes = 'Failed to get platform version. ';
+    }
+    print(barcodeScanRes);
+    // if (!mounted) return;
+    // setState(() {
+    //   String _scanBarcodeResult = barcodeScanRes;
+    // });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -145,6 +164,7 @@ class _MainPageonePageState extends State<MainPageonePage> {
               child: CustomImageView(
                 imagePath: ImageConstant.imgBarcode,
                 width: screenWidth * 0.125,
+                onTap: scanBarcode,
               ),
             ),
           ),

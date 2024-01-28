@@ -31,7 +31,7 @@ class LoginPageScreen extends GetWidget<LoginPageController> {
             child: Column(
               children: [
                 _buildLoginSection(screenWidth, screenHeight),
-                SizedBox(height: screenHeight * 0.03),
+                SizedBox(height: screenHeight * 0.1),
                 Padding(
                   padding: EdgeInsets.only(
                       left: screenWidth * 0.15, right: screenWidth * 0.15),
@@ -60,7 +60,7 @@ class LoginPageScreen extends GetWidget<LoginPageController> {
                     ],
                   ),
                 ),
-                SizedBox(height: screenHeight * 0.06),
+                SizedBox(height: screenHeight * 0.1),
                 CustomElevatedButton(
                   text: "lbl_login".tr,
                   margin: EdgeInsets.only(
@@ -68,6 +68,7 @@ class LoginPageScreen extends GetWidget<LoginPageController> {
                   buttonStyle: CustomButtonStyles.outlinePrimaryTL16,
                   buttonTextStyle: theme.textTheme.titleLarge!,
                   onPressed: () => sendPhoneNumber(),
+                  height: screenHeight * 0.075,
                 ),
                 SizedBox(height: screenHeight * 0.09),
               ],

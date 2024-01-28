@@ -7,9 +7,11 @@ import 'firebase_options.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'core/app_export.dart';
 import 'package:provider/provider.dart';
+import 'package:supercart_new/model/mongodb.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await MongoDatabase.connect();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

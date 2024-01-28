@@ -3,10 +3,16 @@ import 'package:supercart_new/core/app_export.dart';
 
 // ignore: must_be_immutable
 class ProductlistItemWidget extends StatelessWidget {
-  const ProductlistItemWidget({Key? key})
-      : super(
-          key: key,
-        );
+  final String itemName;
+  final int itemPrice;
+  final VoidCallback onDelete;
+
+  const ProductlistItemWidget({
+    required this.itemName,
+    required this.itemPrice, // Add item name parameter
+    required this.onDelete,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +30,7 @@ class ProductlistItemWidget extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Text(barcodeID),
           CustomImageView(
             imagePath: ImageConstant.imgImage1,
             height: 58 * scaleFactor,
@@ -38,8 +45,8 @@ class ProductlistItemWidget extends StatelessWidget {
               bottom: 17 * scaleFactor,
             ),
             child: Text(
-              "Lay’s India’s Magic Masala 40g",
-              maxLines: 2,
+              "$itemName",
+              maxLines: 4,
               overflow: TextOverflow.ellipsis,
             ),
           ),
@@ -65,7 +72,7 @@ class ProductlistItemWidget extends StatelessWidget {
               bottom: 25 * scaleFactor,
             ),
             child: Text(
-              "₹20",
+              '₹ $itemPrice',
               style: theme.textTheme.labelLarge,
             ),
           ),
@@ -73,9 +80,7 @@ class ProductlistItemWidget extends StatelessWidget {
             flex: 46,
           ),
           InkWell(
-            onTap: () {
-              // Handle the bin button click
-            },
+            onTap: onDelete,
             child: Container(
               padding: EdgeInsets.all(10 * scaleFactor),
               decoration: BoxDecoration(

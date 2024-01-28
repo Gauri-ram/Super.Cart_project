@@ -91,10 +91,6 @@ class AppRoutes {
       page: () => ThankyouPageonePage(),
     ),
     GetPage(
-      name: checkoutRoute,
-      page: () => CheckoutPageoneScreen(),
-    ),
-    GetPage(
       name: previousOrderScreen,
       page: () => PreviousOrderScreen(),
     ),

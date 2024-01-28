@@ -20,9 +20,6 @@ class AppbarLeadingIconbutton extends StatelessWidget {
     // double screenHeight = mediaQueryData.size.height;
 
     return GestureDetector(
-      onTap: () {
-        Get.toNamed(AppRoutes.mainPageonePage);
-      },
       child: Padding(
         padding: margin ?? EdgeInsets.zero,
         child: Icon(

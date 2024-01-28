@@ -10,7 +10,7 @@
 
 
     <application
-        android:label="Super.cart"
+        android:label="SuperCart"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

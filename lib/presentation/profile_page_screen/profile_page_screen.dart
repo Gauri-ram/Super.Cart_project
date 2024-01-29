@@ -125,7 +125,7 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
                                 child: Padding(
                                   padding: EdgeInsets.only(
                                       left: getResponsiveWidth(1),
-                                      bottom: getResponsiveHeight(1.5)),
+                                      bottom: getResponsiveHeight(1)),
                                   child: Text(
                                     "  Customer Care",
                                     style: theme.textTheme.titleLarge,
@@ -183,20 +183,23 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(height: getResponsiveHeight(1)),
-          CustomAppBar(
-            leading: AppbarLeadingIconbutton(
-              margin: EdgeInsets.only(
-                  left: getResponsiveWidth(1),
-                  top: getResponsiveHeight(0.7),
-                  bottom: getResponsiveHeight(1.2)),
+          AppBar(
+            backgroundColor: appTheme.lightGreen900,
+            leading: GestureDetector(
               onTap: () {
                 Navigator.pushNamed(context, AppRoutes.mainPageonePage);
               },
+              child: AppbarLeadingIconbutton(
+                margin: EdgeInsets.only(
+                    left: screenWidth * 0.03,
+                    top: screenHeight * 0.007,
+                    bottom: screenHeight * 0.012),
+              ),
             ),
             centerTitle: true,
             title: AppbarSubtitleOne(text: "Profile"),
           ),
-          SizedBox(height: getResponsiveHeight(1)),
+          SizedBox(height: getResponsiveHeight(2)),
           Container(
             padding: EdgeInsets.symmetric(horizontal: getResponsiveWidth(10)),
             alignment: Alignment.center,
@@ -209,7 +212,7 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
                   radius: 50,
                 ),
                 SizedBox(
-                  height: getResponsiveHeight(1),
+                  height: getResponsiveHeight(2),
                 ),
                 Text(
                   ap.userModel.name,
@@ -235,7 +238,7 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: getResponsiveHeight(4)),
+                SizedBox(height: getResponsiveHeight(2.5)),
                 Container(
                   width: double.infinity,
                   alignment: Alignment.center,
@@ -246,13 +249,16 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
                       children: [
                         CustomElevatedButton(
                           text: "Edit Profile",
+                          buttonTextStyle: TextStyle(
+                              fontSize: screenWidth * 0.04,
+                              color: appTheme.lightGreen900),
                           margin: EdgeInsets.symmetric(),
                           onPressed: () {
                             Navigator.pushNamed(
                                 context, AppRoutes.editProfileScreen);
                           },
-                          width: screenWidth * 0.6,
-                          height: screenHeight * 0.06,
+                          width: screenWidth * 0.35,
+                          height: screenHeight * 0.04,
                         ),
                       ],
                     ),

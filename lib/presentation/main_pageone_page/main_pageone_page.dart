@@ -1,10 +1,13 @@
 import 'package:flutter/services.dart';
 import 'package:supercart_new/utils/utils.dart';
-
+import 'package:supercart_new/model/mongodb.dart';
 import '../main_pageone_page/widgets/productlist_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:supercart_new/core/app_export.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:supercart_new/presentation/checkout_screen/checkout_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:supercart_new/provider/auth_provider.dart';
 
 class MainPageonePage extends StatefulWidget {
   const MainPageonePage({Key? key}) : super(key: key);
@@ -16,22 +19,64 @@ class MainPageonePage extends StatefulWidget {
 class _MainPageonePageState extends State<MainPageonePage> {
   late double screenWidth;
   late double screenHeight;
+  List<String> scannedBarcodeIDs = [];
+
+  // List<String> scannedBarcodeIDs = ["10000001", "10000002", "10000004"];
+  List<Map<String, dynamic>> inventoryItems = [];
 
   Future<void> scanBarcode() async {
-    String barcodeScanRes;
+    final ap = Provider.of<AuthProvider>(context, listen: false);
     try {
-      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+      String result = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancel', true, ScanMode.BARCODE);
-      debugPrint(barcodeScanRes);
+      debugPrint(result);
+      var mongoDatabase = await MongoDatabase.connect();
+      bool exists = await mongoDatabase.checkBarcodeExists(result);
+      if (exists) {
+        showSnackBar(context, result);
+        await mongoDatabase.addToCart(ap.userModel.email, result);
+        // setState(() {
+        //   scannedBarcodeIDs.add(result);
+        // });
+        await _fetchInventoryItems(); // Add scanned barcode ID to the list
+      } else {
+        // Show a message indicating that the scanned barcode ID does not exist
+        showSnackBar(context, 'Barcode ID does not exist');
+      }
     } on PlatformException {
-      barcodeScanRes = 'Failed to get platform version. ';
+      String errorMessage = 'Failed to get platform version. ';
+      debugPrint(errorMessage);
+      // setState(() {});
     }
-    print(barcodeScanRes);
-    showSnackBar(context, barcodeScanRes);
-    // if (!mounted) return;
-    // setState(() {
-    //   String _scanBarcodeResult = barcodeScanRes;
-    // });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchInventoryItems();
+  }
+
+  Future<void> _fetchInventoryItems() async {
+    final ap = Provider.of<AuthProvider>(context, listen: false);
+    try {
+      var mongoDatabase = await MongoDatabase.connect();
+      var items = await mongoDatabase.getCartItems(ap.userModel.email);
+      setState(() {
+        inventoryItems = items;
+      });
+      print(inventoryItems);
+    } catch (e) {
+      print("Error fetching inventory items: $e");
+    }
+  }
+
+  Future<void> _deleteCartItem(String userEmail, String barcodeID) async {
+    try {
+      var mongoDatabase = await MongoDatabase.connect();
+      await mongoDatabase.deleteCartItem(userEmail, barcodeID);
+    } catch (e) {
+      print("Error deleting cart item: $e");
+    }
   }
 
   @override
@@ -83,34 +128,40 @@ class _MainPageonePageState extends State<MainPageonePage> {
 
   /// Section Widget
   Widget _buildCartRow(BuildContext context) {
-    return Padding(
+    return Container(
       padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.013),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Padding(
-            padding: EdgeInsets.only(),
-            child: Text(
-              "Item Name",
-              style: theme.textTheme.titleMedium,
-            ),
-          ),
           Spacer(
-            flex: 71,
+            flex: 30,
           ),
           Padding(
             padding: EdgeInsets.only(),
             child: Text(
-              "Quantity",
+              "Item",
               style: theme.textTheme.titleMedium,
             ),
           ),
           Spacer(
-            flex: 28,
+            flex: 35,
+          ),
+          Padding(
+            padding: EdgeInsets.only(),
+            child: Text(
+              "Qty",
+              style: theme.textTheme.titleMedium,
+            ),
+          ),
+          Spacer(
+            flex: 7,
           ),
           Text(
             "Price",
             style: theme.textTheme.titleMedium,
+          ),
+          Spacer(
+            flex: 25,
           ),
         ],
       ),
@@ -119,25 +170,59 @@ class _MainPageonePageState extends State<MainPageonePage> {
 
   /// Section Widget
   Widget _buildProductList(BuildContext context) {
-    return ListView.separated(
-      physics: NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      separatorBuilder: (
-        context,
-        index,
-      ) {
-        return SizedBox(
-          height: screenHeight * 0.025,
-        );
-      },
-      itemCount: 6,
-      itemBuilder: (context, index) {
-        return ProductlistItemWidget();
-      },
+    final ap = Provider.of<AuthProvider>(context, listen: false);
+    return SingleChildScrollView(
+      physics: AlwaysScrollableScrollPhysics(),
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.6,
+        child: ListView.separated(
+          physics: AlwaysScrollableScrollPhysics(),
+          shrinkWrap: true,
+          separatorBuilder: (
+            context,
+            index,
+          ) {
+            return SizedBox(
+              height: screenHeight * 0.025,
+            );
+          },
+          itemCount: inventoryItems.length + 1,
+          itemBuilder: (context, index) {
+            if (index == inventoryItems.length) {
+              return SizedBox(height: screenHeight * 0.025);
+            }
+            String itemName = inventoryItems[index]['itemName'];
+            int itemPrice = inventoryItems[index]['itemPrice'];
+            String img = inventoryItems[index]['img'];
+            return ProductlistItemWidget(
+              itemName: itemName,
+              itemPrice: itemPrice,
+              img: img,
+              onDelete: () async {
+                String barcode = inventoryItems[index]['barcodeID'];
+                setState(() {
+                  inventoryItems.removeAt(index);
+                });
+                await _deleteCartItem(ap.userModel.email, barcode);
+              },
+            );
+          },
+        ),
+      ),
     );
   }
 
   Widget _buildBottomNavigationBar() {
+    // Calculate the total price
+    double totalPrice = 0;
+    for (var item in inventoryItems) {
+      totalPrice += item['itemPrice'] as int;
+    }
+    double discount = totalPrice * 5 / 100;
+    double finalAmount = totalPrice - discount;
+
+    // Get the number of items in inventoryItems
+    double itemCount = inventoryItems.length.toDouble();
     return Container(
       padding: EdgeInsets.all(10.0),
       color: appTheme.lightGreen900,
@@ -172,11 +257,24 @@ class _MainPageonePageState extends State<MainPageonePage> {
           ),
           GestureDetector(
             onTap: () {
-              Get.toNamed(AppRoutes.checkoutRoute);
+              List<double> checkoutDetails = [
+                itemCount,
+                totalPrice,
+                finalAmount,
+                discount
+              ];
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      CheckoutPageoneScreen(checkoutDetails: checkoutDetails),
+                ),
+              );
+              // Get.toNamed(AppRoutes.checkoutRoute, arguments: checkoutDetails);
             },
             child: CustomImageView(
               imagePath: ImageConstant.imgCart,
-              height: screenHeight * 0.08,
+              height: screenHeight * 0.06,
             ),
           ),
         ],

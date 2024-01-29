@@ -129,7 +129,7 @@ class _OtpPageScreenState extends State<OtpPageScreen> {
     double screenWidth = mediaQueryData.size.width;
     double screenHeight = mediaQueryData.size.height;
     return CustomElevatedButton(
-      height: screenHeight * 0.1,
+      height: screenHeight * 0.075,
       width: screenWidth * 0.8,
       text: "Verify".tr,
       margin: EdgeInsets.only(

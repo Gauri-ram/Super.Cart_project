@@ -83,7 +83,9 @@ class ThankyouPageonePage extends StatelessWidget {
                   ),
                   TextSpan(
                     text: "YOUR PURCHASE WAS SUCCESSFUL",
-                    style: theme.textTheme.displaySmall
+                    style: ThemeData()
+                        .textTheme
+                        .displaySmall
                         ?.copyWith(color: Colors.white),
                   ),
                 ],

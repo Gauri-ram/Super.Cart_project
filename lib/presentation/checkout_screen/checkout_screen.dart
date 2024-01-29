@@ -8,9 +8,13 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:supercart_new/provider/auth_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:supercart_new/model/mongodb.dart';
 
 class CheckoutPageoneScreen extends StatefulWidget {
-  const CheckoutPageoneScreen({Key? key}) : super(key: key);
+  final List<double> checkoutDetails;
+
+  const CheckoutPageoneScreen({Key? key, required this.checkoutDetails})
+      : super(key: key);
 
   @override
   _CheckoutPageoneScreenState createState() => _CheckoutPageoneScreenState();
@@ -18,11 +22,40 @@ class CheckoutPageoneScreen extends StatefulWidget {
 
 class _CheckoutPageoneScreenState extends State<CheckoutPageoneScreen> {
   Razorpay? _razorpay;
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+  late int itemCount;
+  late double totalPrice;
+  late double discount;
+  late double finalAmount;
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) async {
+    final ap = Provider.of<AuthProvider>(context, listen: false);
     Fluttertoast.showToast(
         msg: "SUCCESS PAYMENT: ${response.paymentId}", timeInSecForIosWeb: 4);
 
+    // Navigate to the thank you page
     Navigator.pushNamed(context, AppRoutes.thankyouPageScreen);
+
+    try {
+      // Retrieve the cart data for the user
+      var mongoDatabase = await MongoDatabase.connect();
+      var cartData = await mongoDatabase.getCartData(ap.userModel.email);
+      print(cartData[0]["barcodeList"]);
+
+      // Push the cart data to the purchased collection
+      await mongoDatabase.pushToPurchased(
+          ap.userModel.email, cartData[0]["barcodeList"]);
+
+      // Delete the cart data
+      await mongoDatabase.deleteFromCart(ap.userModel.email);
+    } catch (e) {
+      // Handle any errors that occur during the process
+      print("Error handling payment success: $e");
+      // Optionally, show a toast or message indicating the error
+      Fluttertoast.showToast(
+        msg: "Error handling payment success",
+        timeInSecForIosWeb: 4,
+      );
+    }
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
@@ -40,6 +73,12 @@ class _CheckoutPageoneScreenState extends State<CheckoutPageoneScreen> {
   @override
   void initState() {
     super.initState();
+    itemCount = widget.checkoutDetails.isNotEmpty
+        ? widget.checkoutDetails[0].truncate()
+        : 0;
+    totalPrice = widget.checkoutDetails[1];
+    finalAmount = widget.checkoutDetails[2];
+    discount = widget.checkoutDetails[3];
     _razorpay = Razorpay();
     _razorpay?.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay?.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
@@ -51,7 +90,7 @@ class _CheckoutPageoneScreenState extends State<CheckoutPageoneScreen> {
     var options = {
       'key': 'rzp_test_TdOGT5BsbxJDrE', //test mode
       // 'key': 'rzp_live_FLTPo2ImHpzU0H', //live mode
-      'amount': 1000, //paisa
+      'amount': finalAmount * 100, //paisa
       'name': "SuperCart",
       'description': 'item',
       'prefill': {
@@ -115,7 +154,7 @@ class _CheckoutPageoneScreenState extends State<CheckoutPageoneScreen> {
                               bottom: screenHeight * 0.1,
                               top: screenHeight * 0.1),
                           child: Text(
-                            "₹73\n\n-₹5\n\n₹68",
+                            "₹$totalPrice \n\n₹$discount\n\n₹$finalAmount",
                             maxLines: 5,
                             // overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.right,
@@ -174,10 +213,10 @@ class _CheckoutPageoneScreenState extends State<CheckoutPageoneScreen> {
                 style: theme.textTheme.titleLarge!.copyWith(fontSize: 15),
                 children: [
                   TextSpan(
-                    text: "4",
+                    text: "Number of items: ",
                   ),
                   TextSpan(
-                    text: " items",
+                    text: "$itemCount",
                   ),
                 ],
               ),

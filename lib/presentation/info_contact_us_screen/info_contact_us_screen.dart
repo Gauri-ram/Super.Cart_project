@@ -26,17 +26,19 @@ class InfoContactUsScreen extends StatelessWidget {
               child: Stack(
                 alignment: Alignment.topCenter,
                 children: [
-                  // SizedBox(height: screenHeight * 0.2),
-                  CustomAppBar(
-                    leading: AppbarLeadingIconbutton(
-                      margin: EdgeInsets.only(
-                          left: screenWidth * 0.01,
-                          top: screenHeight * 0.007,
-                          bottom: screenHeight * 0.012),
+                  AppBar(
+                    backgroundColor: appTheme.lightGreen900,
+                    leading: GestureDetector(
                       onTap: () {
                         Navigator.pushNamed(
                             context, AppRoutes.profilePageScreen);
                       },
+                      child: AppbarLeadingIconbutton(
+                        margin: EdgeInsets.only(
+                            left: screenWidth * 0.03,
+                            top: screenHeight * 0.007,
+                            bottom: screenHeight * 0.012),
+                      ),
                     ),
                     centerTitle: true,
                     title: AppbarSubtitleOne(text: "Contact Us"),
@@ -58,13 +60,13 @@ class InfoContactUsScreen extends StatelessWidget {
                                 right: screenWidth * 0.065),
                             child: Text(
                               "Feel free to reach out anytime, and we'll get back to you promptly.",
-                              maxLines: 2,
+                              maxLines: 5,
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.center,
                               style: CustomTextStyles.labelMediumGray200,
                             ),
                           ),
-                          SizedBox(height: screenHeight * 0.073), // 73.v
+                          SizedBox(height: screenHeight * 0.05), // 73.v
                           _buildUserInfo(screenWidth, screenHeight)
                         ],
                       ),
@@ -186,7 +188,7 @@ class InfoContactUsScreen extends StatelessWidget {
     );
   }
 
-  onTapArrowDown(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.profilePageScreen);
-  }
+  // void onTapArrowDown(BuildContext context) {
+  //   Get.toNamed(AppRoutes.profilePageScreen);
+  // }
 }

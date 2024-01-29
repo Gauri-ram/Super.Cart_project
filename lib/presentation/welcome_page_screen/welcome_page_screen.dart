@@ -120,7 +120,7 @@ class WelcomePageScreen extends GetWidget<WelcomePageController> {
                                         navigateToLogin();
                                       }
                                     },
-                                    height: screenHeight * 0.1),
+                                    height: screenHeight * 0.075),
                                 SizedBox(height: screenHeight * 0.025),
                               ],
                             ),

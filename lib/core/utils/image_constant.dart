@@ -40,7 +40,7 @@ class ImageConstant {
 
   static String imageNotFound = 'assets/images/image_not_found.png';
 
-  static String imgCart = 'assets/images/img_cart.png';
+  static String imgCart = 'assets/images/img_cart2.png';
 
   // Info/Contact Us images
   static String imgEllipse1 = '$imagePath/img_ellipse_1.png';

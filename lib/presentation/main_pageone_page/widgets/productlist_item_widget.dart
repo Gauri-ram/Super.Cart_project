@@ -5,11 +5,13 @@ import 'package:supercart_new/core/app_export.dart';
 class ProductlistItemWidget extends StatelessWidget {
   final String itemName;
   final int itemPrice;
+  final String img;
   final VoidCallback onDelete;
 
   const ProductlistItemWidget({
     required this.itemName,
     required this.itemPrice, // Add item name parameter
+    required this.img,
     required this.onDelete,
     Key? key,
   }) : super(key: key);
@@ -32,7 +34,7 @@ class ProductlistItemWidget extends StatelessWidget {
         children: [
           // Text(barcodeID),
           CustomImageView(
-            imagePath: ImageConstant.imgImage1,
+            imagePath: img,
             height: 58 * scaleFactor,
             width: 58 * scaleFactor,
             radius: BorderRadius.circular(20 * scaleFactor),

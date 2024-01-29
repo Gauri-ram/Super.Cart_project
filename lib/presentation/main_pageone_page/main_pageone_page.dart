@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:supercart_new/core/app_export.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:supercart_new/presentation/checkout_screen/checkout_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:supercart_new/provider/auth_provider.dart';
 
 class MainPageonePage extends StatefulWidget {
   const MainPageonePage({Key? key}) : super(key: key);
@@ -23,6 +25,7 @@ class _MainPageonePageState extends State<MainPageonePage> {
   List<Map<String, dynamic>> inventoryItems = [];
 
   Future<void> scanBarcode() async {
+    final ap = Provider.of<AuthProvider>(context, listen: false);
     try {
       String result = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancel', true, ScanMode.BARCODE);
@@ -31,9 +34,10 @@ class _MainPageonePageState extends State<MainPageonePage> {
       bool exists = await mongoDatabase.checkBarcodeExists(result);
       if (exists) {
         showSnackBar(context, result);
-        setState(() {
-          scannedBarcodeIDs.add(result);
-        });
+        await mongoDatabase.addToCart(ap.userModel.email, result);
+        // setState(() {
+        //   scannedBarcodeIDs.add(result);
+        // });
         await _fetchInventoryItems(); // Add scanned barcode ID to the list
       } else {
         // Show a message indicating that the scanned barcode ID does not exist
@@ -42,7 +46,7 @@ class _MainPageonePageState extends State<MainPageonePage> {
     } on PlatformException {
       String errorMessage = 'Failed to get platform version. ';
       debugPrint(errorMessage);
-      setState(() {});
+      // setState(() {});
     }
   }
 
@@ -53,18 +57,25 @@ class _MainPageonePageState extends State<MainPageonePage> {
   }
 
   Future<void> _fetchInventoryItems() async {
+    final ap = Provider.of<AuthProvider>(context, listen: false);
     try {
       var mongoDatabase = await MongoDatabase.connect();
-      var items = await mongoDatabase.getInventoryItems(scannedBarcodeIDs);
-      await Future.forEach(scannedBarcodeIDs, (item) async {
-        await mongoDatabase.updateItemStatus(item, 'cart');
-      });
+      var items = await mongoDatabase.getCartItems(ap.userModel.email);
       setState(() {
         inventoryItems = items;
       });
       print(inventoryItems);
     } catch (e) {
       print("Error fetching inventory items: $e");
+    }
+  }
+
+  Future<void> _deleteCartItem(String userEmail, String barcodeID) async {
+    try {
+      var mongoDatabase = await MongoDatabase.connect();
+      await mongoDatabase.deleteCartItem(userEmail, barcodeID);
+    } catch (e) {
+      print("Error deleting cart item: $e");
     }
   }
 
@@ -101,7 +112,7 @@ class _MainPageonePageState extends State<MainPageonePage> {
                         SizedBox(height: screenHeight * 0.035),
                         _buildCartRow(context),
                         SizedBox(height: screenHeight * 0.035),
-                        _buildProductList(context, scannedBarcodeIDs),
+                        _buildProductList(context),
                       ],
                     ),
                   ),
@@ -122,29 +133,35 @@ class _MainPageonePageState extends State<MainPageonePage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Padding(
-            padding: EdgeInsets.only(),
-            child: Text(
-              "Item Name",
-              style: theme.textTheme.titleMedium,
-            ),
-          ),
           Spacer(
-            flex: 71,
+            flex: 30,
           ),
           Padding(
             padding: EdgeInsets.only(),
             child: Text(
-              "Quantity",
+              "Item",
               style: theme.textTheme.titleMedium,
             ),
           ),
           Spacer(
-            flex: 28,
+            flex: 35,
+          ),
+          Padding(
+            padding: EdgeInsets.only(),
+            child: Text(
+              "Qty",
+              style: theme.textTheme.titleMedium,
+            ),
+          ),
+          Spacer(
+            flex: 7,
           ),
           Text(
             "Price",
             style: theme.textTheme.titleMedium,
+          ),
+          Spacer(
+            flex: 25,
           ),
         ],
       ),
@@ -152,7 +169,8 @@ class _MainPageonePageState extends State<MainPageonePage> {
   }
 
   /// Section Widget
-  Widget _buildProductList(BuildContext context, List<String> barcodeIDs) {
+  Widget _buildProductList(BuildContext context) {
+    final ap = Provider.of<AuthProvider>(context, listen: false);
     return SingleChildScrollView(
       physics: AlwaysScrollableScrollPhysics(),
       child: SizedBox(
@@ -175,22 +193,17 @@ class _MainPageonePageState extends State<MainPageonePage> {
             }
             String itemName = inventoryItems[index]['itemName'];
             int itemPrice = inventoryItems[index]['itemPrice'];
+            String img = inventoryItems[index]['img'];
             return ProductlistItemWidget(
               itemName: itemName,
               itemPrice: itemPrice,
+              img: img,
               onDelete: () async {
-                String barcode = '';
+                String barcode = inventoryItems[index]['barcodeID'];
                 setState(() {
                   inventoryItems.removeAt(index);
-                  barcode = scannedBarcodeIDs[index];
-                  scannedBarcodeIDs.removeAt(index);
                 });
-                try {
-                  var mongoDatabase = await MongoDatabase.connect();
-                  await mongoDatabase.updateItemStatus(barcode, 'available');
-                } catch (e) {
-                  print("Error updating item status: $e");
-                }
+                await _deleteCartItem(ap.userModel.email, barcode);
               },
             );
           },
@@ -261,7 +274,7 @@ class _MainPageonePageState extends State<MainPageonePage> {
             },
             child: CustomImageView(
               imagePath: ImageConstant.imgCart,
-              height: screenHeight * 0.08,
+              height: screenHeight * 0.06,
             ),
           ),
         ],

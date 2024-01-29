@@ -135,7 +135,7 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
                             ],
                           ),
                         ),
-                        SizedBox(height: getResponsiveHeight(20)),
+                        SizedBox(height: getResponsiveHeight(5)),
                         CustomElevatedButton(
                           height: screenHeight * 0.07,
                           width: screenWidth * 0.7,

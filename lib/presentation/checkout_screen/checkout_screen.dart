@@ -8,6 +8,7 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:supercart_new/provider/auth_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:supercart_new/model/mongodb.dart';
 
 class CheckoutPageoneScreen extends StatefulWidget {
   final List<double> checkoutDetails;
@@ -26,11 +27,35 @@ class _CheckoutPageoneScreenState extends State<CheckoutPageoneScreen> {
   late double discount;
   late double finalAmount;
 
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+  void _handlePaymentSuccess(PaymentSuccessResponse response) async {
+    final ap = Provider.of<AuthProvider>(context, listen: false);
     Fluttertoast.showToast(
         msg: "SUCCESS PAYMENT: ${response.paymentId}", timeInSecForIosWeb: 4);
 
+    // Navigate to the thank you page
     Navigator.pushNamed(context, AppRoutes.thankyouPageScreen);
+
+    try {
+      // Retrieve the cart data for the user
+      var mongoDatabase = await MongoDatabase.connect();
+      var cartData = await mongoDatabase.getCartData(ap.userModel.email);
+      print(cartData[0]["barcodeList"]);
+
+      // Push the cart data to the purchased collection
+      await mongoDatabase.pushToPurchased(
+          ap.userModel.email, cartData[0]["barcodeList"]);
+
+      // Delete the cart data
+      await mongoDatabase.deleteFromCart(ap.userModel.email);
+    } catch (e) {
+      // Handle any errors that occur during the process
+      print("Error handling payment success: $e");
+      // Optionally, show a toast or message indicating the error
+      Fluttertoast.showToast(
+        msg: "Error handling payment success",
+        timeInSecForIosWeb: 4,
+      );
+    }
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {

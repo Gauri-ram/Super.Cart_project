@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:supercart_new/utils/utils.dart';
 
 import '../main_pageone_page/widgets/productlist_item_widget.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ class _MainPageonePageState extends State<MainPageonePage> {
       barcodeScanRes = 'Failed to get platform version. ';
     }
     print(barcodeScanRes);
+    showSnackBar(context, barcodeScanRes);
     // if (!mounted) return;
     // setState(() {
     //   String _scanBarcodeResult = barcodeScanRes;

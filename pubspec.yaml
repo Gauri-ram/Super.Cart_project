@@ -32,9 +32,11 @@ dev_dependencies:
   flutter_launcher_icons: ^0.13.1
 
 flutter_icons:
-android: true
-ios: true
-image_path: "assets/images/supercart.png"
+  android: true
+  ios: true
+  image_path: "assets/images/supercart.png"
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/images/supercart_adaptive_fore.png"
 flutter: 
   uses-material-design: true
   assets: 

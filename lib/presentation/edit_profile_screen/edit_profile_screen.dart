@@ -7,11 +7,7 @@ import 'package:supercart_new/provider/auth_provider.dart';
 import 'package:supercart_new/utils/utils.dart';
 import 'package:supercart_new/widgets/app_bar/appbar_leading_iconbutton.dart';
 import 'package:supercart_new/widgets/app_bar/appbar_subtitle_one.dart';
-import 'package:supercart_new/widgets/app_bar/custom_app_bar.dart';
-// import 'package:supercart_new/widgets/custom_bottom_app_bar.dart';
 import 'package:supercart_new/widgets/custom_elevated_button.dart';
-// import 'package:flutter/services.dart';
-// import 'package:supercart_new/core/app_export.dart';
 import 'dart:io';
 
 class EditProfileScreen extends StatefulWidget {
@@ -177,18 +173,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(height: getResponsiveHeight(1.5)),
-          CustomAppBar(
-            leading: AppbarLeadingIconbutton(
-              margin: EdgeInsets.only(
-                  left: getResponsiveWidth(1),
-                  top: getResponsiveHeight(0.7),
-                  bottom: getResponsiveHeight(1.2)),
+          AppBar(
+            backgroundColor: appTheme.lightGreen900,
+            leading: GestureDetector(
               onTap: () {
                 Navigator.pushNamed(context, AppRoutes.profilePageScreen);
               },
+              child: AppbarLeadingIconbutton(
+                margin: EdgeInsets.only(
+                    left: screenWidth * 0.03,
+                    top: screenHeight * 0.007,
+                    bottom: screenHeight * 0.012),
+              ),
             ),
             centerTitle: true,
             title: AppbarSubtitleOne(text: "Edit Profile"),

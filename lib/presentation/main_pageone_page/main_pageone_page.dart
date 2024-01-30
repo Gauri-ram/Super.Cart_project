@@ -35,18 +35,13 @@ class _MainPageonePageState extends State<MainPageonePage> {
       if (exists) {
         showSnackBar(context, result);
         await mongoDatabase.addToCart(ap.userModel.email, result);
-        // setState(() {
-        //   scannedBarcodeIDs.add(result);
-        // });
-        await _fetchInventoryItems(); // Add scanned barcode ID to the list
+        await _fetchInventoryItems();
       } else {
-        // Show a message indicating that the scanned barcode ID does not exist
         showSnackBar(context, 'Barcode ID does not exist');
       }
     } on PlatformException {
       String errorMessage = 'Failed to get platform version. ';
       debugPrint(errorMessage);
-      // setState(() {});
     }
   }
 
@@ -110,7 +105,7 @@ class _MainPageonePageState extends State<MainPageonePage> {
                         ),
                         SizedBox(height: screenHeight * 0.035),
                         _buildCartRow(context),
-                        SizedBox(height: screenHeight * 0.035),
+                        SizedBox(height: screenHeight * 0.05),
                         _buildProductList(context),
                       ],
                     ),
@@ -170,6 +165,25 @@ class _MainPageonePageState extends State<MainPageonePage> {
   /// Section Widget
   Widget _buildProductList(BuildContext context) {
     final ap = Provider.of<AuthProvider>(context, listen: false);
+    if (inventoryItems.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(height: screenHeight * 0.1),
+            CustomImageView(
+              imagePath: ImageConstant.imgEmptyCart,
+              height: screenHeight * 0.15,
+            ),
+            SizedBox(height: 20),
+            Text(
+              "No items in cart",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      );
+    }
     return SingleChildScrollView(
       physics: AlwaysScrollableScrollPhysics(),
       child: SizedBox(
@@ -269,7 +283,6 @@ class _MainPageonePageState extends State<MainPageonePage> {
                       CheckoutPageoneScreen(checkoutDetails: checkoutDetails),
                 ),
               );
-              // Get.toNamed(AppRoutes.checkoutRoute, arguments: checkoutDetails);
             },
             child: CustomImageView(
               imagePath: ImageConstant.imgCart,

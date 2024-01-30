@@ -12,8 +12,6 @@ class InfoContactUsScreen extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
-        // appBar: _buildAppBar(context, screenWidth, screenHeight),
-
         body: Container(
           width: screenWidth,
           color: appTheme.lightGreen900,
@@ -24,6 +22,7 @@ class InfoContactUsScreen extends StatelessWidget {
               child: Stack(
                 alignment: Alignment.topCenter,
                 children: [
+                  SizedBox(height: screenHeight * 0.015),
                   AppBar(
                     backgroundColor: appTheme.lightGreen900,
                     leading: GestureDetector(
@@ -40,6 +39,7 @@ class InfoContactUsScreen extends StatelessWidget {
                     ),
                     centerTitle: true,
                     title: AppbarSubtitleOne(text: "Contact Us"),
+                    toolbarHeight: screenHeight * 0.15,
                   ),
                   Align(
                     alignment: Alignment.topCenter,
@@ -50,6 +50,9 @@ class InfoContactUsScreen extends StatelessWidget {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
+                          SizedBox(
+                            height: screenHeight * 0.05,
+                          ),
                           Container(
                             height: screenHeight * 0.1,
                             width: screenWidth * 0.6, // 259.h

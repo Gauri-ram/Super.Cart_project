@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supercart_new/core/app_export.dart';
 import 'package:supercart_new/widgets/app_bar/appbar_leading_iconbutton.dart';
-import 'package:supercart_new/widgets/app_bar/appbar_title.dart';
-import 'package:supercart_new/widgets/app_bar/custom_app_bar.dart';
+import 'package:supercart_new/widgets/app_bar/appbar_subtitle_one.dart';
 import 'package:supercart_new/widgets/custom_elevated_button.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -190,19 +189,22 @@ class _CheckoutPageoneScreenState extends State<CheckoutPageoneScreen> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomAppBar(
-            height: screenHeight * 0.05,
-            leadingWidth: screenWidth * 0.15,
-            leading: AppbarLeadingIconbutton(
-              margin: EdgeInsets.only(
-                left: screenWidth * 0.01,
-                top: screenHeight * 0.007,
-                bottom: screenHeight * 0.012,
+          SizedBox(height: screenHeight * 0.015),
+          AppBar(
+            backgroundColor: appTheme.lightGreen900,
+            leading: GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.mainPageonePage);
+              },
+              child: AppbarLeadingIconbutton(
+                margin: EdgeInsets.only(
+                    left: screenWidth * 0.03,
+                    top: screenHeight * 0.007,
+                    bottom: screenHeight * 0.012),
               ),
             ),
-            title: AppbarTitle(
-              text: "Check Out",
-            ),
+            centerTitle: true,
+            title: AppbarSubtitleOne(text: "Check out"),
           ),
           SizedBox(height: screenHeight * 0.04),
           Padding(

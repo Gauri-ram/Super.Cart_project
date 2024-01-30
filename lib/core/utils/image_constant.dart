@@ -36,7 +36,7 @@ class ImageConstant {
 
   static String imgVector = '$imagePath/img_vector.svg';
 
-  // static String imgCart = '$imagePath/img_cart.svg';
+  static String imgEmptyCart = '$imagePath/img_empty_cart.png';
 
   static String imageNotFound = 'assets/images/image_not_found.png';
 

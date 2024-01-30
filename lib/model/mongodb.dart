@@ -1,6 +1,4 @@
 import 'package:mongo_dart/mongo_dart.dart';
-import 'dart:developer';
-import 'dart:io';
 
 class MongoDatabase {
   final Db _db;
@@ -22,18 +20,15 @@ class MongoDatabase {
 
   Future<void> addToCart(String userEmail, String barcodeID) async {
     var cartCollection = _db.collection("cart");
-    // Check if a document with the provided userEmail exists
     var existingDoc =
         await cartCollection.findOne(where.eq("email", userEmail));
 
     if (existingDoc == null) {
-      // If no document exists, create a new one with the provided userEmail
       await cartCollection.insert({
         "email": userEmail,
         "barcodeList": [barcodeID]
       });
     } else {
-      // If a document exists, update it to add the new barcodeID to the existing list
       var updatedList = List<String>.from(existingDoc['barcodeList'] ?? []);
 
       updatedList.add(barcodeID);

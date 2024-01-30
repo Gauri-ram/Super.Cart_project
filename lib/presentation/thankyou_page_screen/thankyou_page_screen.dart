@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supercart_new/core/app_export.dart';
 
-// ignore_for_file: must_be_immutable
 class ThankyouPageonePage extends StatelessWidget {
   const ThankyouPageonePage({Key? key}) : super(key: key);
 
@@ -18,26 +17,25 @@ class ThankyouPageonePage extends StatelessWidget {
             child: Column(
               children: [
                 _buildThankYouMessage(context, screenWidth, screenHeight),
-                SizedBox(height: 11 * screenHeight / 812), // Adjusted height
+                SizedBox(height: 11 * screenHeight / 812),
                 SizedBox(
-                  height: 485 * screenHeight / 812, // Adjusted height
+                  height: 485 * screenHeight / 812,
                   width: double.maxFinite,
                   child: Stack(
                     alignment: Alignment.topCenter,
                     children: [
                       CustomImageView(
                         imagePath: ImageConstant.img202311101009290000,
-                        height: 485 * screenHeight / 812, // Adjusted height
+                        height: 485 * screenHeight / 812,
                         width: screenWidth,
                         alignment: Alignment.center,
                       ),
                       CustomImageView(
                         imagePath: ImageConstant.imgShoppingCart,
-                        height: 100 * screenHeight / 812, // Adjusted height
-                        width: 100 * screenHeight / 812, // Adjusted width
+                        height: 100 * screenHeight / 812,
+                        width: 100 * screenHeight / 812,
                         alignment: Alignment.topCenter,
-                        margin: EdgeInsets.only(
-                            top: 24 * screenHeight / 812), // Adjusted margin
+                        margin: EdgeInsets.only(top: 24 * screenHeight / 812),
                       ),
                     ],
                   ),
@@ -57,8 +55,8 @@ class ThankyouPageonePage extends StatelessWidget {
     return Container(
       width: double.maxFinite,
       padding: EdgeInsets.symmetric(
-        horizontal: 54 * screenWidth / 375, // Adjusted width
-        vertical: 89 * screenHeight / 812, // Adjusted height
+        horizontal: 54 * screenWidth / 375,
+        vertical: 89 * screenHeight / 812,
       ),
       decoration: AppDecoration.fillLightGreen.copyWith(
           borderRadius: BorderRadius.only(
@@ -69,10 +67,10 @@ class ThankyouPageonePage extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          SizedBox(height: 20 * screenHeight / 812), // Adjusted height
+          SizedBox(height: 20 * screenHeight / 812),
           Container(
-            width: 320 * screenWidth / 375, // Adjusted width
-            margin: EdgeInsets.only(), // Adjusted margin
+            width: 320 * screenWidth / 375,
+            margin: EdgeInsets.only(),
             child: RichText(
               text: TextSpan(
                 children: [
@@ -99,7 +97,6 @@ class ThankyouPageonePage extends StatelessWidget {
   }
 
   Widget _buildBottomNavigationBar() {
-    double screenWidth = mediaQueryData.size.width;
     double screenHeight = mediaQueryData.size.height;
     return Container(
       padding: EdgeInsets.all(5.0),
@@ -116,22 +113,6 @@ class ThankyouPageonePage extends StatelessWidget {
               height: screenHeight * 0.06,
             ),
           ),
-          // InkWell(
-          //   onTap: () {
-          //     Get.toNamed(AppRoutes.otpPageScreen);
-          //   },
-          //   child: Container(
-          //     padding: EdgeInsets.all(screenHeight * 0.02),
-          //     decoration: BoxDecoration(
-          //       shape: BoxShape.circle,
-          //       color: Colors.white,
-          //     ),
-          //     child: CustomImageView(
-          //       imagePath: ImageConstant.imgBarcode,
-          //       width: screenWidth * 0.125,
-          //     ),
-          //   ),
-          // ),
           GestureDetector(
             onTap: () {
               Get.toNamed(AppRoutes.mainPageonePage);

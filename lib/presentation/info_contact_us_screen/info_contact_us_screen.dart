@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supercart_new/core/app_export.dart';
 import 'package:supercart_new/widgets/app_bar/appbar_leading_iconbutton.dart';
-import 'package:supercart_new/widgets/app_bar/appbar_subtitle.dart';
 import 'package:supercart_new/widgets/app_bar/appbar_subtitle_one.dart';
-import 'package:supercart_new/widgets/app_bar/custom_app_bar.dart';
 
 class InfoContactUsScreen extends StatelessWidget {
   const InfoContactUsScreen({Key? key}) : super(key: key);
@@ -187,8 +185,4 @@ class InfoContactUsScreen extends StatelessWidget {
       ),
     );
   }
-
-  // void onTapArrowDown(BuildContext context) {
-  //   Get.toNamed(AppRoutes.profilePageScreen);
-  // }
 }

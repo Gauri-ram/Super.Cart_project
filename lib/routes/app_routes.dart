@@ -10,20 +10,10 @@ import 'package:supercart_new/presentation/login_page_screen/binding/login_page_
 import 'package:supercart_new/presentation/app_navigation_screen/app_navigation_screen.dart';
 import 'package:supercart_new/presentation/app_navigation_screen/binding/app_navigation_binding.dart';
 import 'package:supercart_new/presentation/main_pageone_page/main_pageone_page.dart';
-import 'package:supercart_new/presentation/checkout_screen/checkout_screen.dart';
 import 'package:supercart_new/presentation/profile_page_screen/profile_page_screen.dart';
-import 'package:supercart_new/presentation/info_contact_us_screen/info_contact_us_screen.dart';
 import 'package:supercart_new/presentation/edit_profile_screen/edit_profile_screen.dart';
-import 'package:supercart_new/presentation/previous_order_screen/previous_order_screen.dart';
 import 'package:supercart_new/presentation/thankyou_page_screen/thankyou_page_screen.dart';
 import 'package:get/get.dart';
-
-// class OtpPageBinding extends Bindings {
-//   @override
-//   void dependencies() {
-//     Get.lazyPut<OtpPageController>(() => OtpPageController());
-//   }
-// }
 
 class AppRoutes {
   static const String welcomePageScreen = '/welcome_page_screen';
@@ -114,14 +104,4 @@ class AppRoutes {
       ],
     )
   ];
-
-  // static Map<String, WidgetBuilder> routes = {
-  //   mainPageonePage: (context) => MainPageonePage(),
-  //   // profilePageScreen: (context) => ProfilePageScreen(),
-  //   // previousOrdersScreen: (context) => PreviousOrdersScreen(),
-  //   // infoContactUsScreen: (context) => InfoContactUsScreen(),
-  //   // checkoutPageoneScreen: (context) => CheckoutPageoneScreen(),
-  //   // thankyouPageoneContainerScreen: (context) => ThankyouPageoneContainerScreen(),
-  //   appNavigationScreen: (context) => AppNavigationScreen()
-  // };
 }

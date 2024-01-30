@@ -4,8 +4,6 @@ import 'package:supercart_new/core/app_export.dart';
 import 'package:supercart_new/provider/auth_provider.dart';
 import 'package:supercart_new/widgets/app_bar/appbar_leading_iconbutton.dart';
 import 'package:supercart_new/widgets/app_bar/appbar_subtitle_one.dart';
-import 'package:supercart_new/widgets/app_bar/custom_app_bar.dart';
-import 'package:supercart_new/widgets/custom_bottom_app_bar.dart';
 import 'package:supercart_new/widgets/custom_elevated_button.dart';
 
 class ProfilePageScreen extends StatefulWidget {
@@ -148,7 +146,6 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
                           buttonStyle: CustomButtonStyles.outlinePrimaryTL16,
                           buttonTextStyle: theme.textTheme.titleLarge!,
                           onPressed: () {
-                            // Get.toNamed(AppRoutes.mainPageonePage);
                             ap.userSignOut().then((value) =>
                                 Get.toNamed(AppRoutes.welcomePageScreen));
                           },
@@ -217,24 +214,24 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
                 Text(
                   ap.userModel.name,
                   style: TextStyle(
-                    color: Colors.white, // Set the text color
-                    fontSize: 14, // Set the font size
+                    color: Colors.white,
+                    fontSize: 14,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
                   ap.userModel.email,
                   style: TextStyle(
-                    color: Colors.white, // Set the text color
-                    fontSize: 14, // Set the font size
+                    color: Colors.white,
+                    fontSize: 14,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
                   ap.userModel.phoneNumber,
                   style: TextStyle(
-                    color: Colors.white, // Set the text color
-                    fontSize: 14, // Set the font size
+                    color: Colors.white,
+                    fontSize: 14,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

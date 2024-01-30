@@ -64,7 +64,6 @@ class _MainPageonePageState extends State<MainPageonePage> {
       setState(() {
         inventoryItems = items;
       });
-      print(inventoryItems);
     } catch (e) {
       print("Error fetching inventory items: $e");
     }

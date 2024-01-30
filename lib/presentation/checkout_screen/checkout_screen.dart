@@ -39,7 +39,6 @@ class _CheckoutPageoneScreenState extends State<CheckoutPageoneScreen> {
       // Retrieve the cart data for the user
       var mongoDatabase = await MongoDatabase.connect();
       var cartData = await mongoDatabase.getCartData(ap.userModel.email);
-      print(cartData[0]["barcodeList"]);
 
       // Push the cart data to the purchased collection
       await mongoDatabase.pushToPurchased(
